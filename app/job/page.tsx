@@ -32,7 +32,7 @@ export default function JobPage() {
       const job = await api.createJobDescription(jobTitle, company, description);
       setActiveJob(job);
 
-      const analysis = await api.runAnalysis(activeResume.id, job.id);
+      const analysis = await api.runAnalysis(activeResume, job);
       setActiveAnalysis(analysis);
       addToast('Job alignment analysis ready!', 'success');
 
@@ -52,7 +52,7 @@ export default function JobPage() {
       setActiveJob(sample);
 
       if (activeResume) {
-        const analysis = await api.runAnalysis(activeResume.id, sample.id);
+        const analysis = await api.runAnalysis(activeResume, sample);
         setActiveAnalysis(analysis);
         addToast('Sample FinTech job loaded and analyzed!', 'success');
         router.push('/dashboard');

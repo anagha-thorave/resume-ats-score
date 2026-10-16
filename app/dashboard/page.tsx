@@ -78,7 +78,7 @@ export default function DashboardPage() {
       setActiveResume(updated);
 
       if (activeJob) {
-        const analysis = await api.runAnalysis(updated.id, activeJob.id);
+        const analysis = await api.runAnalysis(updated, activeJob);
         setActiveAnalysis(analysis);
       }
       addToast(`Added '${skill}' to technical skills and updated ATS score!`, 'success');
@@ -143,7 +143,7 @@ export default function DashboardPage() {
                   const res = await api.loadSampleResume();
                   setActiveResume(res);
                   const job = await api.loadSampleJobDescription();
-                  const an = await api.runAnalysis(res.id, job.id);
+                  const an = await api.runAnalysis(res, job);
                   setActiveAnalysis(an);
                   addToast('Loaded demo candidate!', 'success');
                 } finally {

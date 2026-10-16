@@ -26,7 +26,7 @@ export default function EditorPage() {
       setActiveResume(updated);
 
       if (activeJob) {
-        const analysis = await api.runAnalysis(updated.id, activeJob.id);
+        const analysis = await api.runAnalysis(updated, activeJob);
         setActiveAnalysis(analysis);
       }
       addToast('Resume updated and ATS score synchronized!', 'success');

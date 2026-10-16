@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { calculateAtsScore } from '@/lib/scoring';
-import type { AnalysisResponse } from '@/lib/types';
+import type { AnalysisResponse, JobDescriptionResponse, ResumeResponse } from '@/lib/types';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { resume_id, job_description_id } = body;
 
-    const resume = db.getResume(resume_id);
+    const resume = (body.resume as ResumeResponse | undefined) || db.getResume(resume_id);
     if (!resume) {
       return NextResponse.json({ detail: 'Resume not found' }, { status: 404 });
     }
 
-    const job = db.getJobDescription(job_description_id);
+    const job = (body.job as JobDescriptionResponse | undefined) || db.getJobDescription(job_description_id);
     if (!job) {
       return NextResponse.json({ detail: 'Job description not found' }, { status: 404 });
     }

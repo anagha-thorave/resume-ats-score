@@ -39,7 +39,7 @@ export function AppShell({ pageTitle, children }: AppShellProps) {
       setActiveResume(resume);
       const job = await api.loadSampleJobDescription();
       setActiveJob(job);
-      const analysis = await api.runAnalysis(resume.id, job.id);
+      const analysis = await api.runAnalysis(resume, job);
       setActiveAnalysis(analysis);
       addToast('Loaded synthetic candidate demo (Alex Chen)', 'success');
     } catch (err: unknown) {
@@ -65,7 +65,7 @@ export function AppShell({ pageTitle, children }: AppShellProps) {
       });
       setActiveJob(job);
 
-      const analysis = await api.runAnalysis(resume.id, job.id);
+      const analysis = await api.runAnalysis(resume, job);
       setActiveAnalysis(analysis);
       addToast('ATS analysis complete!', 'success');
     } catch (err: unknown) {

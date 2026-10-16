@@ -50,7 +50,7 @@ export default function HistoryPage() {
       setActiveResume(restored);
 
       if (activeJob) {
-        const analysis = await api.runAnalysis(restored.id, activeJob.id);
+        const analysis = await api.runAnalysis(restored, activeJob);
         setActiveAnalysis(analysis);
       }
       addToast('Resume restored to selected version snapshot!', 'success');

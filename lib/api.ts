@@ -124,13 +124,18 @@ export const api = {
   // ANALYSES
   // ─────────────────────────────────────────────────────────
   async runAnalysis(
-    resume_id: string,
-    job_description_id: string,
+    resume: ResumeResponse,
+    job: JobDescriptionResponse,
   ): Promise<AnalysisResponse> {
     const res = await fetch(`${API_BASE}/analyses`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ resume_id, job_description_id }),
+      body: JSON.stringify({
+        resume_id: resume.id,
+        job_description_id: job.id,
+        resume,
+        job,
+      }),
     });
     return handleResponse<AnalysisResponse>(res);
   },
