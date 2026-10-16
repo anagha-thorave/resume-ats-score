@@ -34,6 +34,8 @@ export async function POST(req: NextRequest) {
     }
 
     const require = createRequire(import.meta.url);
+    const { DOMMatrix, ImageData, Path2D } = require('@napi-rs/canvas') as typeof import('@napi-rs/canvas');
+    Object.assign(globalThis, { DOMMatrix, ImageData, Path2D });
     const { PDFParse } = require('pdf-parse') as typeof import('pdf-parse');
     const pdfParser = new PDFParse({ data: buffer });
     let extractedText: string;
