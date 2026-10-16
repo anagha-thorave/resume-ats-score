@@ -4,6 +4,9 @@ const nextConfig = {
   poweredByHeader: false,
   experimental: {
     serverComponentsExternalPackages: ['pdf-parse', '@napi-rs/canvas'],
+    outputFileTracingIncludes: {
+      '/api/resumes/upload': ['./node_modules/pdf-parse/dist/pdf-parse/cjs/pdf.worker.mjs'],
+    },
   },
   // Production security headers
   async headers() {

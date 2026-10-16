@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import { db } from '@/lib/db';
 import { parseResumeText } from '@/lib/parser';
 import type { ResumeResponse } from '@/lib/types';
@@ -37,6 +38,8 @@ export async function POST(req: NextRequest) {
     const { DOMMatrix, ImageData, Path2D } = require('@napi-rs/canvas') as typeof import('@napi-rs/canvas');
     Object.assign(globalThis, { DOMMatrix, ImageData, Path2D });
     const { PDFParse } = require('pdf-parse') as typeof import('pdf-parse');
+    const workerPath = require.resolve('pdf-parse').replace(/index\.cjs$/, 'pdf.worker.mjs');
+    PDFParse.setWorker(pathToFileURL(workerPath).href);
     const pdfParser = new PDFParse({ data: buffer });
     let extractedText: string;
     try {
