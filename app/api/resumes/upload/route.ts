@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PDFParse } from 'pdf-parse';
+import { createRequire } from 'node:module';
 import { db } from '@/lib/db';
 import { parseResumeText } from '@/lib/parser';
 import type { ResumeResponse } from '@/lib/types';
@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ detail: 'The uploaded file is not a valid PDF.' }, { status: 400 });
     }
 
+    const require = createRequire(import.meta.url);
+    const { PDFParse } = require('pdf-parse') as typeof import('pdf-parse');
     const pdfParser = new PDFParse({ data: buffer });
     let extractedText: string;
     try {
