@@ -35,12 +35,10 @@ export async function POST(req: NextRequest) {
     }
 
     const require = createRequire(import.meta.url);
-    const { DOMMatrix, ImageData, Path2D } = require('@napi-rs/canvas') as typeof import('@napi-rs/canvas');
-    Object.assign(globalThis, { DOMMatrix, ImageData, Path2D });
+    const { CanvasFactory, getPath } = require('pdf-parse/worker') as typeof import('pdf-parse/worker');
     const { PDFParse } = require('pdf-parse') as typeof import('pdf-parse');
-    const workerPath = require.resolve('pdf-parse').replace(/index\.cjs$/, 'pdf.worker.mjs');
-    PDFParse.setWorker(pathToFileURL(workerPath).href);
-    const pdfParser = new PDFParse({ data: buffer });
+    PDFParse.setWorker(pathToFileURL(getPath()).href);
+    const pdfParser = new PDFParse({ data: buffer, CanvasFactory });
     let extractedText: string;
     try {
       const result = await pdfParser.getText();

@@ -5,7 +5,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['pdf-parse', '@napi-rs/canvas'],
     outputFileTracingIncludes: {
-      '/api/resumes/upload': ['./node_modules/pdf-parse/dist/pdf-parse/cjs/pdf.worker.mjs'],
+      '/api/resumes/upload': ['./node_modules/pdf-parse/dist/worker/pdf.worker.mjs'],
     },
   },
   // Production security headers
